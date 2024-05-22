@@ -1,0 +1,57 @@
+### Register
+POST http://localhost:8080/register.php
+Content-Type: application/json
+
+{
+  "email": "lore.rizzotti3@gmail.com",
+  "password": "test",
+  "firstname": "Lorenzo",
+  "lastname": "Rizzotti",
+  "age": "25",
+  "class": "1A"
+}
+
+### Login
+POST http://localhost:8080/login.php
+Content-Type: application/json
+
+{
+  "email": "lore.rizzotti3@gmail.com",
+  "password": "test"
+}
+
+
+### Logout
+POST http://localhost:8080/logout.php
+
+### Get user info
+GET http://localhost:8080/user.php
+
+### Get categories
+GET http://localhost:8080/categories.php
+
+### Create a new product
+POST http://localhost:8080/newProduct.php
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="image"; filename="img.png"
+Content-Type: image/png
+
+< img.png
+--WebAppBoundary--
+Content-Disposition: form-data; name="title"
+
+Test
+--WebAppBoundary--
+Content-Disposition: form-data; name="description"
+
+Test
+--WebAppBoundary--
+Content-Disposition: form-data; name="category_id"
+
+1
+--WebAppBoundary--
+
+### Get products
+GET http://localhost:8080/products.php

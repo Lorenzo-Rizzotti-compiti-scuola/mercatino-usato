@@ -1,0 +1,17 @@
+services:
+  backend:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - ./backend:/var/www/html
+  db:
+    image: mariadb
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d
+      - /var/lib/mysql
+    environment:
+      - MARIADB_ALLOW_EMPTY_ROOT_PASSWORD=1
+      - MARIADB_DATABASE=my_rizzotti
