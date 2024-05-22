@@ -1,4 +1,11 @@
-const API_URL = 'http://localhost:8080/';
+let API_URL = 'http://localhost:8080/';
+
+
+if (document.URL.includes('altervista')){
+    const url = new URL(document.URL);
+
+    API_URL = url.protocol + '//' + url.hostname + '/';
+}
 
 const productList = document.getElementById('productList');
 const profileContainer = document.getElementById('profileContainer');
