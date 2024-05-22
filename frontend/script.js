@@ -227,7 +227,6 @@ document.getElementById("newProductForm").addEventListener("submit", function(ev
         .then(response => response.json())
         .then(data => {
             if (data.status === 'success') {
-                alert("Product created successfully");
                 bootstrap.Modal.getInstance(document.getElementById("newProductModal")).hide();
                 refreshProductList();
             } else {
