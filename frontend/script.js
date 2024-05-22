@@ -8,7 +8,6 @@ if (document.URL.includes('altervista')){
 }
 
 const productList = document.getElementById('productList');
-const profileContainer = document.getElementById('profileContainer');
 
 function emptyProductList() {
     while (productList.firstChild) {
@@ -100,7 +99,7 @@ function renderLoggedInUser(firstname, lastname) {
     avatar.style.fontSize = '20px';
     avatar.textContent = firstname[0] + lastname[0];
 
-    profileContainer.replaceWith(avatar);
+    document.getElementById('profileContainer').replaceWith(avatar);
 }
 
 function renderLoginButton() {
@@ -112,7 +111,7 @@ function renderLoginButton() {
     loginButton.dataset.bsTarget = '#loginModal';
     loginButton.textContent = 'Login';
 
-    profileContainer.replaceWith(loginButton);
+    document.getElementById('profileContainer').replaceWith(loginButton);
 }
 
 function updateLoginStatus() {
