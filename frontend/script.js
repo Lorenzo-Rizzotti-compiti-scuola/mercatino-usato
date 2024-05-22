@@ -149,6 +149,8 @@ function refreshProductList() {
         });
 }
 
+refreshProductList();
+
 function formDataToJson(formData) {
     const object = {};
     formData.forEach((value, key) => {
