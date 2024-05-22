@@ -26,6 +26,6 @@
     }
 
     $result = $stmt->get_result();
-    $user = $result->fetch_assoc(MYSQLI_ASSOC);
+    $user = $result->fetch_assoc();
 
     echo json_encode(["status" => "success", "user" => $user]);
