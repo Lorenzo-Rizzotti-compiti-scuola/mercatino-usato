@@ -115,7 +115,7 @@ function updateLoginStatus() {
         .then(response => response.json())
         .then(data => {
             if (data.status === 'success') {
-                renderLoggedInUser(data.data.firstname, data.data.lastname);
+                renderLoggedInUser(data.user.firstname, data.user.lastname);
             } else {
                 renderLoginButton();
             }
