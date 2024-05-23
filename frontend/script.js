@@ -176,6 +176,24 @@ async function refreshProductList() {
     }
 }
 
+async function populateCategoryDropdown() {
+    try {
+        const response = await fetch(`${API_URL}categories.php`);
+        const data = await response.json();
+        if (data.status === 'success') {
+            const categoryDropdown = document.getElementById('productCategory');
+            data.categories.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category.id;
+                option.textContent = category.name;
+                categoryDropdown.appendChild(option);
+            });
+        }
+    } catch (error) {
+        console.error('Error fetching categories:', error);
+    }
+}
+
 document.getElementById("logoutButton").addEventListener("click", async () => {
     try {
         await fetch(`${API_URL}logout.php`, { method: 'POST' });
@@ -264,3 +282,4 @@ for (let i = 0; i < 9; i++) {
 // Initial calls
 updateLoginStatus();
 refreshProductList();
+populateCategoryDropdown();
