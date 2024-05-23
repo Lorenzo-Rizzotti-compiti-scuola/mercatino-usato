@@ -69,6 +69,16 @@ class UIManager {
             productDescription.appendChild(productDescriptionPlaceholder);
         }
 
+        const productUserName = document.createElement('p');
+        productUserName.className = 'card-text';
+        productUserName.textContent = userName;
+        if (!userName) {
+            productUserName.classList.add('placeholder-glow');
+            const productUserNamePlaceholder = document.createElement('span');
+            productUserNamePlaceholder.className = 'placeholder col-12';
+            productUserName.appendChild(productUserNamePlaceholder);
+        }
+
         const askButton = document.createElement('a');
         askButton.className = 'btn btn-primary col-12';
         askButton.href = '#';
@@ -78,7 +88,7 @@ class UIManager {
             askButton.textContent = 'Ask';
         }
 
-        productCardBody.append(productName, productDescription, askButton);
+        productCardBody.append(productName, productUserName, productDescription, askButton);
         productCard.append(productImage, productCardBody);
         productCol.appendChild(productCard);
         productList.appendChild(productCol);
@@ -169,7 +179,7 @@ async function refreshProductList() {
         const data = await response.json();
         UIManager.emptyProductList();
         data.data.forEach(product => {
-            UIManager.createProductCard(product.id, product.image_url, product.title, product.description);
+            UIManager.createProductCard(product.id, product.image_url, product.title, product.description, `${product.first_name} ${product.last_name}`);
         });
     } catch (error) {
         console.error('Error fetching product list:', error);

@@ -6,7 +6,7 @@
         exit();
     }
 
-    $sql = "SELECT * FROM advertisements";
+    $sql = "SELECT advertisements.*, users.first_name, users.last_name FROM advertisements JOIN users ON advertisements.user_id = users.id";
 
     $stmt = DatabaseConnection::getConnection()->prepare($sql);
 
