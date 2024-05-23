@@ -24,7 +24,7 @@ class UIManager {
      * @param {string|null} name - Product name.
      * @param {string|null} description - Product description.
      */
-    static createProductCard(id = null, image = null, name = null, description = null) {
+    static createProductCard(id = null, image = null, name = null, description = null, username = null) {
         const productCol = document.createElement('div');
         productCol.className = 'col';
 
