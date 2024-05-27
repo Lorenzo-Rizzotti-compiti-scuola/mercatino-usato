@@ -71,10 +71,9 @@ class UIManager {
 
         const productUserName = document.createElement('p');
         productUserName.className = 'card-text';
+        productUserName.textContent = username;
 
-        if (username) {
-            productUserName.textContent = username;
-        } else {
+        if (!username) {
             productUserName.classList.add('placeholder-glow');
             const productUserNamePlaceholder = document.createElement('span');
             productUserNamePlaceholder.className = 'placeholder col-12';
