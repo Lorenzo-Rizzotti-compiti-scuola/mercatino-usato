@@ -87,6 +87,11 @@ class UIManager {
             askButton.classList.add('placeholder', 'disabled');
         } else {
             askButton.textContent = 'Ask';
+            askButton.addEventListener('click', function() {
+                document.getElementById('proposalAdId').value = id;
+                const newProposalModal = new bootstrap.Modal(document.getElementById('newProposalModal'));
+                newProposalModal.show();
+            });
         }
 
         productCardBody.append(productName, productUserName, productDescription, askButton);

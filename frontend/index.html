@@ -154,6 +154,26 @@
     <div class="album py-5 bg-light">
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="productList">
+                <div class="modal fade" id="newProposalModal" tabindex="-1" aria-labelledby="newProposalModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="newProposalModalLabel">New Proposal</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="newProposalForm">
+                                    <div class="mb-3">
+                                        <label for="proposalPrice" class="form-label">Price</label>
+                                        <input type="number" class="form-control" id="proposalPrice" name="price" required>
+                                    </div>
+                                    <input type="hidden" id="proposalAdId" name="ad_id">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
