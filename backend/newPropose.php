@@ -26,7 +26,7 @@
 
     $sql = "INSERT INTO proposals (ad_id, user_id, price, date_time) VALUES (?, ?, ?, NOW())";
     $stmt = DatabaseConnection::getConnection()->prepare($sql);
-    $stmt->bind_param("iids", $ad_id, $user_id, $price);
+    $stmt->bind_param('iii', $ad_id, $user_id, $price);
 
     try {
         $stmt->execute();
