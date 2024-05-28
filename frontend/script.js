@@ -267,6 +267,30 @@ document.getElementById("loginForm").addEventListener("submit", async function (
     }
 });
 
+document.getElementById("newProposalForm").addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    const formData = new FormData(this);
+    const jsonData = UIManager.formDataToJson(formData);
+
+    try {
+        const response = await fetch(`${API_URL}newPropose.php`, {
+            method: 'POST',
+            body: jsonData,
+        });
+        const data = await response.json();
+
+        if (data.status === 'success') {
+            bootstrap.Modal.getInstance(document.getElementById("newProposalModal")).hide();
+            alert('Proposal created successfully');
+        } else {
+            alert(data.message);
+        }
+    } catch (error) {
+        console.error('Error creating new proposal:', error);
+    }
+});
+
 document.getElementById("newProductForm").addEventListener("submit", async function (event) {
     event.preventDefault();
 
