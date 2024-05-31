@@ -35,7 +35,13 @@
     }
 
     if ($status === 'accepted') {
-        $sql = "UPDATE proposals SET status = 'rejected' WHERE id != ? AND ad_id = (SELECT ad_id FROM proposals WHERE id = ?)";
+        $sql = "UPDATE proposals 
+                SET status = 'rejected' 
+                WHERE id != ? AND ad_id = (
+                    SELECT ad_id FROM (
+                        SELECT ad_id FROM proposals WHERE id = ?
+                    ) AS tmp
+                );";
         $stmt = DatabaseConnection::getConnection()->prepare($sql);
         $stmt->bind_param('ii', $proposal_id, $proposal_id);
 
