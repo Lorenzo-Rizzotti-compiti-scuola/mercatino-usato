@@ -210,6 +210,39 @@ async function populateCategoryDropdown() {
     }
 }
 
+async function populateCategoryFilter() {
+    try {
+        const response = await fetch(`${API_URL}categories.php`);
+        const data = await response.json();
+        if (data.status === 'success') {
+            const categoryFilter = document.getElementById('categoryFilter');
+            data.categories.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category.id;
+                option.textContent = category.name;
+                categoryFilter.appendChild(option);
+            });
+        }
+    } catch (error) {
+        console.error('Error fetching categories:', error);
+    }
+}
+
+async function refreshProductList() {
+    try {
+        const category = document.getElementById('categoryFilter').value;
+        const self = document.getElementById('selfFilter').checked ? 'true' : 'false';
+        const response = await fetch(`${API_URL}products.php?category=${category}&self=${self}`);
+        const data = await response.json();
+        UIManager.emptyProductList();
+        data.data.forEach(product => {
+            UIManager.createProductCard(product.id, product.image_url, product.title, product.description, `${product.first_name} ${product.last_name}`);
+        });
+    } catch (error) {
+        console.error('Error fetching product list:', error);
+    }
+}
+
 document.getElementById("logoutButton").addEventListener("click", async () => {
     try {
         await fetch(`${API_URL}logout.php`, { method: 'POST' });
@@ -319,7 +352,11 @@ for (let i = 0; i < 9; i++) {
     UIManager.createProductCard();
 }
 
+document.getElementById('categoryFilter').addEventListener('change', refreshProductList);
+document.getElementById('selfFilter').addEventListener('change', refreshProductList);
+
 // Initial calls
 updateLoginStatus();
 refreshProductList();
 populateCategoryDropdown();
+populateCategoryFilter();
