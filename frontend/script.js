@@ -85,11 +85,11 @@ class UIManager {
         const askButton = document.createElement('a');
         askButton.className = 'btn btn-primary col-12';
         askButton.href = '#';
+        askButton.textContent = 'Ask';
         if (!id || proposalAccepted) {
             console.log('id:', id, 'proposalAccepted:', proposalAccepted);
             askButton.classList.add('placeholder', 'disabled');
         } else {
-            askButton.textContent = 'Ask';
             askButton.addEventListener('click', function() {
                 document.getElementById('proposalAdId').value = id;
                 const newProposalModal = new bootstrap.Modal(document.getElementById('newProposalModal'));
