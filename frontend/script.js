@@ -4,6 +4,8 @@ const API_URL = document.URL.includes('altervista')
 
 const productList = document.getElementById('productList');
 
+let loggedInUserId = null;
+
 /**
  * Utility class for managing the product list and user interface.
  */
@@ -186,9 +188,13 @@ async function updateLoginStatus() {
         if (data.status === 'success') {
             UIManager.renderLoggedInUser(data.user.first_name, data.user.last_name);
             selfFilter.parentElement.style.display = ''; // Show the filter
+            loggedInUserId = data.user.id;
+            refreshProductList();
+
         } else {
             UIManager.renderLoginButton();
             selfFilter.parentElement.style.display = 'none'; // Hide the filter
+            loggedInUserId = null
         }
     } catch (error) {
         console.error('Error fetching login status:', error);
