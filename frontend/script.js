@@ -26,7 +26,7 @@ class UIManager {
      * @param {string|null} name - Product name.
      * @param {string|null} description - Product description.
      */
-    static createProductCard(id = null, image = null, name = null, description = null, username = null, userId = null) {
+    static createProductCard(id = null, image = null, name = null, description = null, username = null, userId = null, proposalAccepted = false) {
         const productCol = document.createElement('div');
         productCol.className = 'col';
 
@@ -85,7 +85,7 @@ class UIManager {
         const askButton = document.createElement('a');
         askButton.className = 'btn btn-primary col-12';
         askButton.href = '#';
-        if (!id) {
+        if (!id || proposalAccepted) {
             askButton.classList.add('placeholder', 'disabled');
         } else {
             askButton.textContent = 'Ask';
@@ -207,11 +207,13 @@ async function updateLoginStatus() {
  */
 async function refreshProductList() {
     try {
-        const response = await fetch(`${API_URL}products.php`);
+        const category = document.getElementById('categoryFilter').value;
+        const self = document.getElementById('selfFilter').checked ? 'true' : 'false';
+        const response = await fetch(`${API_URL}products.php?category=${category}&self=${self}`);
         const data = await response.json();
         UIManager.emptyProductList();
         data.data.forEach(product => {
-            UIManager.createProductCard(product.id, product.image_url, product.title, product.description, `${product.first_name} ${product.last_name}`, product['user_id']);
+            UIManager.createProductCard(product.id, product.image_url, product.title, product.description, `${product.first_name} ${product.last_name}`, product['user_id'], product.proposal_accepted > 0);
         });
     } catch (error) {
         console.error('Error fetching product list:', error);

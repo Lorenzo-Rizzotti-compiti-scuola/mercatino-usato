@@ -11,7 +11,10 @@
     $self = isset($_GET['self']) && $_GET['self'] === 'true';
     $category = isset($_GET['category']) ? $_GET['category'] : false;
 
-    $sql = "SELECT advertisements.*, users.first_name, users.last_name FROM advertisements JOIN users ON advertisements.user_id = users.id";
+    $sql = "SELECT advertisements.*, users.first_name, users.last_name, 
+            (SELECT COUNT(*) FROM proposals WHERE ad_id = advertisements.id AND status = 'accepted') as proposal_accepted
+            FROM advertisements 
+            JOIN users ON advertisements.user_id = users.id";
 
     $conditions = [];
     $params = [];
