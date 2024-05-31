@@ -13,7 +13,7 @@
         exit();
     }
 
-    $sql = "SELECT email, first_name, last_name, age, class FROM users WHERE id = ?";
+    $sql = "SELECT email, first_name, last_name, age, class, id FROM users WHERE id = ?";
 
     $stmt = DatabaseConnection::getConnection()->prepare($sql);
     $stmt->bind_param("i", $_SESSION['user_id']);
