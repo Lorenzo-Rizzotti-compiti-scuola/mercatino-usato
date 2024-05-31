@@ -25,6 +25,9 @@ class UIManager {
      * @param {string|null} image - Product image URL.
      * @param {string|null} name - Product name.
      * @param {string|null} description - Product description.
+     * @param {string|null} username - User's name.
+     * @param {number|null} userId - User ID.
+     * @param {boolean} proposalAccepted - Whether the proposal is accepted.
      */
     static createProductCard(id = null, image = null, name = null, description = null, username = null, userId = null, proposalAccepted = false) {
         const productCol = document.createElement('div');
@@ -74,7 +77,6 @@ class UIManager {
         const productUserName = document.createElement('p');
         productUserName.className = 'card-text';
         productUserName.textContent = username;
-
         if (!username) {
             productUserName.classList.add('placeholder-glow');
             const productUserNamePlaceholder = document.createElement('span');
@@ -87,7 +89,6 @@ class UIManager {
         askButton.href = '#';
         askButton.textContent = 'Ask';
         if (!id || proposalAccepted) {
-            console.log('id:', id, 'proposalAccepted:', proposalAccepted);
             askButton.classList.add('placeholder', 'disabled');
         } else {
             askButton.addEventListener('click', function() {
@@ -190,13 +191,11 @@ async function updateLoginStatus() {
             UIManager.renderLoggedInUser(data.user.first_name, data.user.last_name);
             selfFilter.parentElement.style.display = ''; // Show the filter
             loggedInUserId = data.user.id;
-            console.log(data.user.id);
             refreshProductList();
-
         } else {
             UIManager.renderLoginButton();
             selfFilter.parentElement.style.display = 'none'; // Hide the filter
-            loggedInUserId = null
+            loggedInUserId = null;
         }
     } catch (error) {
         console.error('Error fetching login status:', error);
@@ -214,7 +213,7 @@ async function refreshProductList() {
         const data = await response.json();
         UIManager.emptyProductList();
         data.data.forEach(product => {
-            UIManager.createProductCard(product.id, product.image_url, product.title, product.description, `${product.first_name} ${product.last_name}`, product['user_id'], product.proposal_accepted > 0);
+            UIManager.createProductCard(product.id, product.image_url, product.title, product.description, `${product.first_name} ${product.last_name}`, product.user_id, product.proposal_accepted > 0);
         });
     } catch (error) {
         console.error('Error fetching product list:', error);
@@ -254,21 +253,6 @@ async function populateCategoryFilter() {
         }
     } catch (error) {
         console.error('Error fetching categories:', error);
-    }
-}
-
-async function refreshProductList() {
-    try {
-        const category = document.getElementById('categoryFilter').value;
-        const self = document.getElementById('selfFilter').checked ? 'true' : 'false';
-        const response = await fetch(`${API_URL}products.php?category=${category}&self=${self}`);
-        const data = await response.json();
-        UIManager.emptyProductList();
-        data.data.forEach(product => {
-            UIManager.createProductCard(product.id, product.image_url, product.title, product.description, `${product.first_name} ${product.last_name}`, product['user_id'], product.proposal_accepted > 0);
-        });
-    } catch (error) {
-        console.error('Error fetching product list:', error);
     }
 }
 
