@@ -176,6 +176,20 @@
 <main>
     <div class="album py-5 bg-light">
         <div class="container">
+            <!-- Add this modal to display the proposals -->
+            <div class="modal fade" id="proposalsModal" tabindex="-1" aria-labelledby="proposalsModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="proposalsModalLabel">Proposals</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="proposalsModalBody">
+                            <!-- Proposals will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="modal fade" id="newProposalModal" tabindex="-1" aria-labelledby="newProposalModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">

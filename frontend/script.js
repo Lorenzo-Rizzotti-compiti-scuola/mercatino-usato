@@ -24,7 +24,7 @@ class UIManager {
      * @param {string|null} name - Product name.
      * @param {string|null} description - Product description.
      */
-    static createProductCard(id = null, image = null, name = null, description = null, username = null) {
+    static createProductCard(id = null, image = null, name = null, description = null, username = null, userId = null) {
         const productCol = document.createElement('div');
         productCol.className = 'col';
 
@@ -94,7 +94,23 @@ class UIManager {
             });
         }
 
-        productCardBody.append(productName, productUserName, productDescription, askButton);
+        if (userId === loggedInUserId) {
+            const viewProposalsButton = document.createElement('a');
+            viewProposalsButton.className = 'btn btn-secondary col-12 mt-2';
+            viewProposalsButton.href = '#';
+            if (!id) {
+                viewProposalsButton.classList.add('placeholder', 'disabled');
+            } else {
+                viewProposalsButton.textContent = 'View Proposals';
+                viewProposalsButton.addEventListener('click', function() {
+                    viewProposals(id);
+                });
+            }
+
+            productCardBody.append(productName, productUserName, productDescription, askButton, viewProposalsButton);
+        } else {
+            productCardBody.append(productName, productUserName, productDescription, askButton);
+        }
         productCard.append(productImage, productCardBody);
         productCol.appendChild(productCard);
         productList.appendChild(productCol);
@@ -349,6 +365,26 @@ document.getElementById("newProductForm").addEventListener("submit", async funct
         console.error('Error adding new product:', error);
     }
 });
+
+async function viewProposals(productId) {
+    try {
+        const response = await fetch(`${API_URL}proposals.php?ad_id=${productId}`);
+        const data = await response.json();
+        if (data.status === 'success') {
+            const proposalsModalBody = document.getElementById('proposalsModalBody');
+            proposalsModalBody.innerHTML = ''; // Clear the modal body
+            data.data.forEach(proposal => {
+                const proposalElement = document.createElement('p');
+                proposalElement.textContent = `Proposal by ${proposal.first_name} ${proposal.last_name}: ${proposal.price}`;
+                proposalsModalBody.appendChild(proposalElement);
+            });
+            const proposalsModal = new bootstrap.Modal(document.getElementById('proposalsModal'));
+            proposalsModal.show();
+        }
+    } catch (error) {
+        console.error('Error fetching proposals:', error);
+    }
+}
 
 // Create placeholder product cards
 for (let i = 0; i < 9; i++) {
