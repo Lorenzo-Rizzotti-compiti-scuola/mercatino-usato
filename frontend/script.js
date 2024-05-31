@@ -166,10 +166,13 @@ async function updateLoginStatus() {
     try {
         const response = await fetch(`${API_URL}user.php`);
         const data = await response.json();
+        const createButton = document.querySelector('#newProductModalButton'); // Assuming the id of the "Create" button is 'newProductModalButton'
         if (data.status === 'success') {
             UIManager.renderLoggedInUser(data.user.first_name, data.user.last_name);
+            if (createButton) createButton.style.display = 'block'; // Show the "Create" button
         } else {
             UIManager.renderLoginButton();
+            if (createButton) createButton.style.display = 'none'; // Hide the "Create" button
         }
     } catch (error) {
         console.error('Error fetching login status:', error);
