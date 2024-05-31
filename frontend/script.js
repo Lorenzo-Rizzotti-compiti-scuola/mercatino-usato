@@ -189,6 +189,7 @@ async function updateLoginStatus() {
             UIManager.renderLoggedInUser(data.user.first_name, data.user.last_name);
             selfFilter.parentElement.style.display = ''; // Show the filter
             loggedInUserId = data.user.id;
+            console.log(data.user.id);
             refreshProductList();
 
         } else {
