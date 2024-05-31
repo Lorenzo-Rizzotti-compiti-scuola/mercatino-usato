@@ -214,6 +214,7 @@ async function refreshProductList() {
         const data = await response.json();
         UIManager.emptyProductList();
         data.data.forEach(product => {
+            console.log(product.proposal_accepted > 0);
             UIManager.createProductCard(product.id, product.image_url, product.title, product.description, `${product.first_name} ${product.last_name}`, product['user_id'], product.proposal_accepted > 0);
         });
     } catch (error) {
