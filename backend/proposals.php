@@ -15,7 +15,7 @@
 
     $ad_id = $_GET['ad_id'];
 
-    $sql = "SELECT proposals.*, users.first_name, users.last_name FROM proposals JOIN users ON proposals.user_id = users.id WHERE proposals.ad_id = ?";
+    $sql = "SELECT proposals.*, users.first_name, users.last_name, proposals.status FROM proposals JOIN users ON proposals.user_id = users.id WHERE proposals.ad_id = ?";
     $stmt = DatabaseConnection::getConnection()->prepare($sql);
     $stmt->bind_param('i', $ad_id);
 

@@ -380,12 +380,14 @@ async function viewProposals(productId) {
         if (data.status === 'success') {
             const proposalsModalBody = document.getElementById('proposalsModalBody');
             proposalsModalBody.innerHTML = ''; // Clear the modal body
+            let isAnyProposalAccepted = data.data.some(proposal => proposal.status === 'accepted');
             data.data.forEach(proposal => {
                 const proposalElement = document.createElement('p');
-                proposalElement.textContent = `Proposal by ${proposal.first_name} ${proposal.last_name}: ${proposal.price}`;
+                proposalElement.textContent = `Proposal by ${proposal.first_name} ${proposal.last_name}: ${proposal.price}, Status: ${proposal.status}`;
 
                 const acceptButton = document.createElement('button');
                 acceptButton.textContent = 'Accept';
+                acceptButton.disabled = isAnyProposalAccepted;
                 acceptButton.addEventListener('click', function() {
                     updateProposal(proposal.id, 'accepted');
                 });
