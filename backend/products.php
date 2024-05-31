@@ -8,7 +8,7 @@
         exit();
     }
 
-    $self = isset($_GET['self']) ? $_GET['self'] : false;
+    $self = isset($_GET['self']) && $_GET['self'] === 'true';
     $category = isset($_GET['category']) ? $_GET['category'] : false;
 
     $sql = "SELECT advertisements.*, users.first_name, users.last_name FROM advertisements JOIN users ON advertisements.user_id = users.id";
