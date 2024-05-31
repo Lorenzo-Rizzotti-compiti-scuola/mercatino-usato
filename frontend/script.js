@@ -383,6 +383,20 @@ async function viewProposals(productId) {
             data.data.forEach(proposal => {
                 const proposalElement = document.createElement('p');
                 proposalElement.textContent = `Proposal by ${proposal.first_name} ${proposal.last_name}: ${proposal.price}`;
+
+                const acceptButton = document.createElement('button');
+                acceptButton.textContent = 'Accept';
+                acceptButton.addEventListener('click', function() {
+                    updateProposal(proposal.id, 'accepted');
+                });
+
+                const rejectButton = document.createElement('button');
+                rejectButton.textContent = 'Reject';
+                rejectButton.addEventListener('click', function() {
+                    updateProposal(proposal.id, 'rejected');
+                });
+
+                proposalElement.append(acceptButton, rejectButton);
                 proposalsModalBody.appendChild(proposalElement);
             });
             const proposalsModal = new bootstrap.Modal(document.getElementById('proposalsModal'));
@@ -390,6 +404,24 @@ async function viewProposals(productId) {
         }
     } catch (error) {
         console.error('Error fetching proposals:', error);
+    }
+}
+
+async function updateProposal(proposalId, status) {
+    try {
+        const response = await fetch(`${API_URL}updateProposal.php`, {
+            method: 'POST',
+            body: JSON.stringify({ proposal_id: proposalId, status: status }),
+        });
+        const data = await response.json();
+
+        if (data.status === 'success') {
+            alert('Proposal updated successfully');
+        } else {
+            alert(data.message);
+        }
+    } catch (error) {
+        console.error('Error updating proposal:', error);
     }
 }
 
